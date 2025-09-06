@@ -147,3 +147,27 @@ export const NoFormats: Story = {
     initialValue: "すべての書式が無効です。ツールバーにはボタンが表示されません。",
   },
 };
+
+export const NoFormatsWithExistingFormats: Story = {
+  args: {
+    enabledFormats: { bold: false, italic: false },
+    initialValue: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "この文章には" },
+          { text: "太字", bold: true },
+          { text: "と" },
+          { text: "イタリック", italic: true },
+          { text: "が含まれていますが、ツールバーでは編集できません。" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "書式は表示されますが、新たに追加や変更はできません。" },
+        ],
+      },
+    ],
+  },
+};
