@@ -55,12 +55,17 @@ export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
     ];
   });
 
+  // ボタンの状態を管理するstate
+  const [isBoldActive, setIsBoldActive] = useState(false);
+
   const handleChange = useCallback(
     (newValue: Descendant[]) => {
       setValue(newValue);
       onChange?.(newValue);
+      // エディタの状態が変わったときにボタンの状態を更新
+      setIsBoldActive(CustomEditorUtils.isBoldMarkActive(editor));
     },
-    [onChange],
+    [onChange, editor],
   );
 
   const handleKeyDown = useCallback(
@@ -82,9 +87,9 @@ export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
 
   const toggleBold = useCallback(() => {
     CustomEditorUtils.toggleBoldMark(editor);
+    // ボタンクリック後に状態を即座に更新
+    setIsBoldActive(CustomEditorUtils.isBoldMarkActive(editor));
   }, [editor]);
-
-  const isBoldActive = CustomEditorUtils.isBoldMarkActive(editor);
 
   return (
     <div className={styles.richTextEditor}>
