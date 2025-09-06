@@ -14,6 +14,7 @@ export type CustomElement = ParagraphElement;
 export type CustomText = {
   text: string;
   bold?: boolean;
+  italic?: boolean;
 };
 
 declare module "slate" {

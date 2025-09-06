@@ -29,6 +29,7 @@ export const RichTextEditor: React.FC<Props> = ({
 
   // ボタンの状態を管理するstate
   const [isBoldActive, setIsBoldActive] = useState(false);
+  const [isItalicActive, setIsItalicActive] = useState(false);
 
   const handleChange = useCallback(
     (newValue: Descendant[]) => {
@@ -36,6 +37,7 @@ export const RichTextEditor: React.FC<Props> = ({
       onChange?.(newValue);
       // エディタの状態が変わったときにボタンの状態を更新
       setIsBoldActive(CustomEditorUtils.isBoldMarkActive(editor));
+      setIsItalicActive(CustomEditorUtils.isItalicMarkActive(editor));
     },
     [onChange, editor],
   );
@@ -52,6 +54,11 @@ export const RichTextEditor: React.FC<Props> = ({
           CustomEditorUtils.toggleBoldMark(editor);
           break;
         }
+        case "i": {
+          event.preventDefault();
+          CustomEditorUtils.toggleItalicMark(editor);
+          break;
+        }
       }
     },
     [editor],
@@ -63,9 +70,20 @@ export const RichTextEditor: React.FC<Props> = ({
     setIsBoldActive(CustomEditorUtils.isBoldMarkActive(editor));
   }, [editor]);
 
+  const toggleItalic = useCallback(() => {
+    CustomEditorUtils.toggleItalicMark(editor);
+    // ボタンクリック後に状態を即座に更新
+    setIsItalicActive(CustomEditorUtils.isItalicMarkActive(editor));
+  }, [editor]);
+
   return (
     <div className={styles.richTextEditor}>
-      <Toolbar isBoldActive={isBoldActive} toggleBold={toggleBold} />
+      <Toolbar
+        isBoldActive={isBoldActive}
+        toggleBold={toggleBold}
+        isItalicActive={isItalicActive}
+        toggleItalic={toggleItalic}
+      />
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
         <Editable
           className={styles.editable}

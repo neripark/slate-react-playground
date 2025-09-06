@@ -16,4 +16,18 @@ export const CustomEditorUtils = {
       Editor.addMark(editor, "bold", true);
     }
   },
+
+  isItalicMarkActive(editor: Editor) {
+    const marks = Editor.marks(editor) as CustomText | null;
+    return marks ? marks.italic === true : false;
+  },
+
+  toggleItalicMark(editor: Editor) {
+    const isActive = CustomEditorUtils.isItalicMarkActive(editor);
+    if (isActive) {
+      Editor.removeMark(editor, "italic");
+    } else {
+      Editor.addMark(editor, "italic", true);
+    }
+  },
 };

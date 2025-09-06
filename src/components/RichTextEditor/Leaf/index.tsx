@@ -10,5 +10,9 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     children = <strong>{children}</strong>;
   }
 
+  if (customLeaf.italic) {
+    children = <em>{children}</em>;
+  }
+
   return <span {...attributes}>{children}</span>;
 };

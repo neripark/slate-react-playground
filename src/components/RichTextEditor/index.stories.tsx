@@ -102,3 +102,26 @@ export const ComplexRichText: Story = {
     ],
   },
 };
+
+export const WithItalicText: Story = {
+  args: {
+    initialValue: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "これは" },
+          { text: "イタリック", italic: true },
+          { text: "のテストです。" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "太字と", bold: true },
+          { text: "イタリック", italic: true },
+          { text: "の組み合わせもテストできます。" },
+        ],
+      },
+    ],
+  },
+};
