@@ -5,7 +5,7 @@ import { withHistory } from "slate-history";
 import styles from "./index.module.css";
 import { CustomText } from "../../types/slate";
 
-interface RichTextEditorProps {
+interface Props {
   initialValue?: string;
   onChange?: (value: Descendant[]) => void;
 }
@@ -35,7 +35,7 @@ const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   return <span {...attributes}>{children}</span>;
 };
 
-export const RichTextEditor: React.FC<RichTextEditorProps> = ({
+export const RichTextEditor: React.FC<Props> = ({
   initialValue,
   onChange,
 }) => {
