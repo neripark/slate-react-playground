@@ -17,12 +17,12 @@ export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
 
   const [value, setValue] = useState<Descendant[]>(() => {
     if (initialValue) {
-      return [
-        {
-          type: "paragraph",
-          children: [{ text: initialValue }],
-        },
-      ];
+      // 改行文字で分割して複数のParagraphを作成
+      const lines = initialValue.split("\n");
+      return lines.map((line) => ({
+        type: "paragraph",
+        children: [{ text: line }],
+      }));
     }
     return [
       {
