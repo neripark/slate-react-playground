@@ -9,11 +9,17 @@ import { Toolbar } from "./Toolbar";
 import { SubmitButton } from "./SubmitButton";
 import { getInitialValue } from "./getInitialValue";
 
+type FormatSettings = {
+  bold?: boolean;
+  italic?: boolean;
+};
+
 type Props = {
   initialValue?: string | Descendant[];
   onChange?: (value: Descendant[]) => void;
   onSubmit?: (value: Descendant[]) => void;
   submitButtonText?: string;
+  enabledFormats?: FormatSettings;
 };
 
 export const RichTextEditor: React.FC<Props> = ({
@@ -21,6 +27,7 @@ export const RichTextEditor: React.FC<Props> = ({
   onChange,
   onSubmit,
   submitButtonText = "送信",
+  enabledFormats = { bold: false, italic: false },
 }) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [value, setValue] = useState<Descendant[]>(
@@ -50,18 +57,22 @@ export const RichTextEditor: React.FC<Props> = ({
 
       switch (event.key) {
         case "b": {
-          event.preventDefault();
-          CustomEditorUtils.toggleBoldMark(editor);
+          if (enabledFormats.bold) {
+            event.preventDefault();
+            CustomEditorUtils.toggleBoldMark(editor);
+          }
           break;
         }
         case "i": {
-          event.preventDefault();
-          CustomEditorUtils.toggleItalicMark(editor);
+          if (enabledFormats.italic) {
+            event.preventDefault();
+            CustomEditorUtils.toggleItalicMark(editor);
+          }
           break;
         }
       }
     },
-    [editor],
+    [editor, enabledFormats],
   );
 
   const toggleBold = useCallback(() => {
@@ -83,6 +94,7 @@ export const RichTextEditor: React.FC<Props> = ({
         toggleBold={toggleBold}
         isItalicActive={isItalicActive}
         toggleItalic={toggleItalic}
+        enabledFormats={enabledFormats}
       />
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
         <Editable

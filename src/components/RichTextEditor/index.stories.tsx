@@ -27,6 +27,7 @@ const meta = {
       console.log("送信されたコンテンツ:", value);
       alert("送信されました！コンソールを確認してください。");
     },
+    enabledFormats: { bold: true, italic: true },
   },
 } satisfies Meta<typeof RichTextEditor>;
 
@@ -123,5 +124,26 @@ export const WithItalicText: Story = {
         ],
       },
     ],
+  },
+};
+
+export const BoldOnly: Story = {
+  args: {
+    enabledFormats: { bold: true, italic: false },
+    initialValue: "太字のみが有効です。Ctrl+Bは動きますが、Ctrl+Iは動きません。",
+  },
+};
+
+export const ItalicOnly: Story = {
+  args: {
+    enabledFormats: { bold: false, italic: true },
+    initialValue: "イタリックのみが有効です。Ctrl+Iは動きますが、Ctrl+Bは動きません。",
+  },
+};
+
+export const NoFormats: Story = {
+  args: {
+    enabledFormats: { bold: false, italic: false },
+    initialValue: "すべての書式が無効です。ツールバーにはボタンが表示されません。",
   },
 };
