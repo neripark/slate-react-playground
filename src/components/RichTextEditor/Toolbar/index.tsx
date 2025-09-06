@@ -1,46 +1,41 @@
 import styles from "./index.module.css";
+import { useEditorFormat, FormatType } from "../EditorFormatContext";
 
-type Props = {
-  isBoldActive: boolean;
-  toggleBold: () => void;
-  isItalicActive: boolean;
-  toggleItalic: () => void;
+const FORMAT_LABELS: Record<FormatType, string> = {
+  bold: "Bold",
+  italic: "Italic",
 };
 
-export const Toolbar: React.FC<Props> = ({
-  isBoldActive,
-  toggleBold,
-  isItalicActive,
-  toggleItalic,
-}) => {
-  const onBoldMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    toggleBold();
-  };
+const FORMAT_ICONS: Record<FormatType, React.ReactNode> = {
+  bold: <strong>B</strong>,
+  italic: <em>I</em>,
+};
 
-  const onItalicMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
+export const Toolbar: React.FC = () => {
+  const { settings, formatStates, toggleFormat } = useEditorFormat();
+
+  const enabledFormats = Object.entries(settings)
+    .filter(([, config]) => config.enabled && config.showInToolbar)
+    .map(([format]) => format as FormatType);
+
+  const handleMouseDown = (format: FormatType) => (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggleItalic();
+    toggleFormat(format);
   };
 
   return (
     <div className={styles.toolbar}>
-      <button
-        type="button"
-        className={`${styles.toolbarButton} ${isBoldActive ? styles.active : ""}`}
-        onMouseDown={onBoldMouseDown}
-        aria-label="Bold"
-      >
-        <strong>B</strong>
-      </button>
-      <button
-        type="button"
-        className={`${styles.toolbarButton} ${isItalicActive ? styles.active : ""}`}
-        onMouseDown={onItalicMouseDown}
-        aria-label="Italic"
-      >
-        <em>I</em>
-      </button>
+      {enabledFormats.map((format) => (
+        <button
+          key={format}
+          type="button"
+          className={`${styles.toolbarButton} ${formatStates[format] ? styles.active : ""}`}
+          onMouseDown={handleMouseDown(format)}
+          aria-label={FORMAT_LABELS[format]}
+        >
+          {FORMAT_ICONS[format]}
+        </button>
+      ))}
     </div>
   );
 };
