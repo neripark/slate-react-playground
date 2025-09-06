@@ -9,7 +9,7 @@ import { Toolbar } from "./Toolbar";
 import { SubmitButton } from "./SubmitButton";
 
 type Props = {
-  initialValue?: string;
+  initialValue?: string | Descendant[];
   onChange?: (value: Descendant[]) => void;
   onSubmit?: (value: Descendant[]) => void;
   submitButtonText?: string;
@@ -25,7 +25,11 @@ export const RichTextEditor: React.FC<Props> = ({
 
   const [value, setValue] = useState<Descendant[]>(() => {
     if (initialValue) {
-      // 改行文字で分割して複数のParagraphを作成
+      // 既にDescendant[]形式の場合はそのまま使用
+      if (Array.isArray(initialValue)) {
+        return initialValue;
+      }
+      // 文字列の場合は改行文字で分割して複数のParagraphを作成
       const lines = initialValue.split("\n");
       return lines.map((line) => ({
         type: "paragraph",

@@ -54,3 +54,53 @@ export const WithMultipleLines: Story = {
       "これは複数行のテキストの例です。\nこれは複数行のテキストの例です。\n\n\nこれは複数行のテキストの例です。",
   },
 };
+
+export const WithRichTextInitialValue: Story = {
+  args: {
+    initialValue: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "これは" },
+          { text: "太字", bold: true },
+          { text: "の装飾がついたテキストです。" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "複数の段落があり、" },
+          { text: "一部が太字", bold: true },
+          { text: "になっています。" },
+        ],
+      },
+    ],
+  },
+};
+
+export const ComplexRichText: Story = {
+  args: {
+    initialValue: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "タイトル部分", bold: true },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [{ text: "" }],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "本文では" },
+          { text: "重要な部分", bold: true },
+          { text: "だけが太字になっており、通常のテキストと" },
+          { text: "強調されたテキスト", bold: true },
+          { text: "が混在しています。" },
+        ],
+      },
+    ],
+  },
+};
