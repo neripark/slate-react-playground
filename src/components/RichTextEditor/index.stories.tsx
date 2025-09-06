@@ -4,9 +4,6 @@ import { RichTextEditor } from "./index";
 const meta = {
   title: "Components/RichTextEditor",
   component: RichTextEditor,
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     initialValue: {
       control: "text",
