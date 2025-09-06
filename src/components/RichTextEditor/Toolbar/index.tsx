@@ -3,7 +3,7 @@ import styles from "./index.module.css";
 type Props = {
   isBoldActive: boolean;
   toggleBold: () => void;
-}
+};
 
 export const Toolbar: React.FC<Props> = ({ isBoldActive, toggleBold }) => {
   const onMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {

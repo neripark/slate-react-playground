@@ -10,7 +10,7 @@ import { Toolbar } from "./Toolbar";
 type Props = {
   initialValue?: string;
   onChange?: (value: Descendant[]) => void;
-}
+};
 
 export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
