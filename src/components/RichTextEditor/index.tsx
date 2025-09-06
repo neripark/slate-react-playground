@@ -5,8 +5,9 @@ import { withHistory } from "slate-history";
 import styles from "./index.module.css";
 import { Leaf } from "./Leaf";
 import { CustomEditorUtils } from "./CustomEditorUtils";
+import { Toolbar } from "./Toolbar";
 
-interface Props {
+type Props = {
   initialValue?: string;
   onChange?: (value: Descendant[]) => void;
 }
@@ -69,19 +70,7 @@ export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
 
   return (
     <div className={styles.richTextEditor}>
-      <div className={styles.toolbar}>
-        <button
-          type="button"
-          className={`${styles.toolbarButton} ${isBoldActive ? styles.active : ""}`}
-          onMouseDown={(event) => {
-            event.preventDefault();
-            toggleBold();
-          }}
-          aria-label="Bold"
-        >
-          <strong>B</strong>
-        </button>
-      </div>
+      <Toolbar isBoldActive={isBoldActive} toggleBold={toggleBold} />
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
         <Editable
           className={styles.editable}
