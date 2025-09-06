@@ -37,7 +37,7 @@ type Props = {
 export const EditorFormatProvider: React.FC<Props> = ({
   children,
   editor,
-  enabledFormats = [],
+  enabledFormats = ["bold", "italic"],
   formatSettings = {},
 }) => {
   const settings: FormatSettings = {
