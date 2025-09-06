@@ -10,14 +10,14 @@ interface Props {
   onChange?: (value: Descendant[]) => void;
 }
 
-const CustomEditor = {
+const CustomEditorUtils = {
   isBoldMarkActive(editor: Editor) {
     const marks = Editor.marks(editor) as CustomText | null;
     return marks ? marks.bold === true : false;
   },
 
   toggleBoldMark(editor: Editor) {
-    const isActive = CustomEditor.isBoldMarkActive(editor);
+    const isActive = CustomEditorUtils.isBoldMarkActive(editor);
     if (isActive) {
       Editor.removeMark(editor, "bold");
     } else {
@@ -35,10 +35,7 @@ const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   return <span {...attributes}>{children}</span>;
 };
 
-export const RichTextEditor: React.FC<Props> = ({
-  initialValue,
-  onChange,
-}) => {
+export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   const [value, setValue] = useState<Descendant[]>(() => {
@@ -75,7 +72,7 @@ export const RichTextEditor: React.FC<Props> = ({
       switch (event.key) {
         case "b": {
           event.preventDefault();
-          CustomEditor.toggleBoldMark(editor);
+          CustomEditorUtils.toggleBoldMark(editor);
           break;
         }
       }
@@ -84,10 +81,10 @@ export const RichTextEditor: React.FC<Props> = ({
   );
 
   const toggleBold = useCallback(() => {
-    CustomEditor.toggleBoldMark(editor);
+    CustomEditorUtils.toggleBoldMark(editor);
   }, [editor]);
 
-  const isBoldActive = CustomEditor.isBoldMarkActive(editor);
+  const isBoldActive = CustomEditorUtils.isBoldMarkActive(editor);
 
   return (
     <div className={styles.richTextEditor}>
