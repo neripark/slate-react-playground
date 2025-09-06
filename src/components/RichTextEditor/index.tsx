@@ -1,39 +1,15 @@
 import { useState, useCallback, useMemo } from "react";
-import { createEditor, Descendant, Editor } from "slate";
-import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
+import { createEditor, Descendant } from "slate";
+import { Slate, Editable, withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import styles from "./index.module.css";
-import { CustomText } from "../../types/slate";
+import { Leaf } from "./Leaf";
+import { CustomEditorUtils } from "./CustomEditorUtils";
 
 interface Props {
   initialValue?: string;
   onChange?: (value: Descendant[]) => void;
 }
-
-const CustomEditorUtils = {
-  isBoldMarkActive(editor: Editor) {
-    const marks = Editor.marks(editor) as CustomText | null;
-    return marks ? marks.bold === true : false;
-  },
-
-  toggleBoldMark(editor: Editor) {
-    const isActive = CustomEditorUtils.isBoldMarkActive(editor);
-    if (isActive) {
-      Editor.removeMark(editor, "bold");
-    } else {
-      Editor.addMark(editor, "bold", true);
-    }
-  },
-};
-
-const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
-  const customLeaf = leaf as CustomText;
-  if (customLeaf.bold) {
-    children = <strong>{children}</strong>;
-  }
-
-  return <span {...attributes}>{children}</span>;
-};
 
 export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
