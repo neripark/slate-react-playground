@@ -2,8 +2,8 @@ import { useState, useCallback, useMemo } from "react";
 import { createEditor, Descendant, Editor } from "slate";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { withHistory } from "slate-history";
-import styles from "./RichTextEditor.module.css";
-import { CustomText } from "../types/slate";
+import styles from "./index.module.css";
+import { CustomText } from "../../types/slate";
 
 interface RichTextEditorProps {
   initialValue?: string;
