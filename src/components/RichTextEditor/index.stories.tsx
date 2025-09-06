@@ -27,7 +27,6 @@ const meta = {
       console.log("送信されたコンテンツ:", value);
       alert("送信されました！コンソールを確認してください。");
     },
-    enabledFormats: ["bold", "italic"],
   },
 } satisfies Meta<typeof RichTextEditor>;
 
@@ -124,19 +123,5 @@ export const WithItalicText: Story = {
         ],
       },
     ],
-  },
-};
-
-export const BoldOnlyEnabled: Story = {
-  args: {
-    enabledFormats: ["bold"],
-    initialValue: "太字のみが有効です。Ctrl+Bは動きますが、Ctrl+Iは動きません。",
-  },
-};
-
-export const ItalicOnlyEnabled: Story = {
-  args: {
-    enabledFormats: ["italic"],
-    initialValue: "イタリックのみが有効です。Ctrl+Iは動きますが、Ctrl+Bは動きません。",
   },
 };
