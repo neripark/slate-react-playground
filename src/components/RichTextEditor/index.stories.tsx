@@ -83,9 +83,7 @@ export const ComplexRichText: Story = {
     initialValue: [
       {
         type: "paragraph",
-        children: [
-          { text: "タイトル部分", bold: true },
-        ],
+        children: [{ text: "タイトル部分", bold: true }],
       },
       {
         type: "paragraph",

@@ -7,6 +7,7 @@ import { Leaf } from "./Leaf";
 import { CustomEditorUtils } from "./CustomEditorUtils";
 import { Toolbar } from "./Toolbar";
 import { SubmitButton } from "./SubmitButton";
+import { getInitialValue } from "./getInitialValue";
 
 type Props = {
   initialValue?: string | Descendant[];
@@ -22,27 +23,9 @@ export const RichTextEditor: React.FC<Props> = ({
   submitButtonText = "送信",
 }) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-
-  const [value, setValue] = useState<Descendant[]>(() => {
-    if (initialValue) {
-      // 既にDescendant[]形式の場合はそのまま使用
-      if (Array.isArray(initialValue)) {
-        return initialValue;
-      }
-      // 文字列の場合は改行文字で分割して複数のParagraphを作成
-      const lines = initialValue.split("\n");
-      return lines.map((line) => ({
-        type: "paragraph",
-        children: [{ text: line }],
-      }));
-    }
-    return [
-      {
-        type: "paragraph",
-        children: [{ text: "" }],
-      },
-    ];
-  });
+  const [value, setValue] = useState<Descendant[]>(
+    getInitialValue(initialValue),
+  );
 
   // ボタンの状態を管理するstate
   const [isBoldActive, setIsBoldActive] = useState(false);
