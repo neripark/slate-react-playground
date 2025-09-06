@@ -13,15 +13,27 @@ const meta = {
       action: "changed",
       description: "コンテンツが変更された時のコールバック",
     },
+    onSubmit: {
+      action: "submitted",
+      description: "送信ボタンが押された時のコールバック",
+    },
+    submitButtonText: {
+      control: "text",
+      description: "送信ボタンのテキスト",
+    },
   },
+  args: {
+    onSubmit: (value) => {
+      console.log("送信されたコンテンツ:", value);
+      alert("送信されました！コンソールを確認してください。");
+    },
+  }
 } satisfies Meta<typeof RichTextEditor>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {},
-};
+export const Default: Story = {};
 
 export const WithInitialValue: Story = {
   args: {

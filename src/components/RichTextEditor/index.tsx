@@ -6,13 +6,21 @@ import styles from "./index.module.css";
 import { Leaf } from "./Leaf";
 import { CustomEditorUtils } from "./CustomEditorUtils";
 import { Toolbar } from "./Toolbar";
+import { SubmitButton } from "./SubmitButton";
 
 type Props = {
   initialValue?: string;
   onChange?: (value: Descendant[]) => void;
+  onSubmit?: (value: Descendant[]) => void;
+  submitButtonText?: string;
 };
 
-export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
+export const RichTextEditor: React.FC<Props> = ({
+  initialValue,
+  onChange,
+  onSubmit,
+  submitButtonText = "送信",
+}) => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   const [value, setValue] = useState<Descendant[]>(() => {
@@ -79,6 +87,11 @@ export const RichTextEditor: React.FC<Props> = ({ initialValue, onChange }) => {
           placeholder="テキストを入力してください..."
         />
       </Slate>
+      <SubmitButton
+        onSubmit={onSubmit}
+        submitButtonText={submitButtonText}
+        value={value}
+      />
     </div>
   );
 };
