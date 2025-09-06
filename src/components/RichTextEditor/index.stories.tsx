@@ -27,7 +27,7 @@ const meta = {
       console.log("送信されたコンテンツ:", value);
       alert("送信されました！コンソールを確認してください。");
     },
-  }
+  },
 } satisfies Meta<typeof RichTextEditor>;
 
 export default meta;
