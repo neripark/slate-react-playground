@@ -9,7 +9,17 @@ export type ParagraphElement = {
   children: CustomText[];
 };
 
-export type CustomElement = ParagraphElement;
+export type BulletListElement = {
+  type: "bullet-list";
+  children: ListItemElement[];
+};
+
+export type ListItemElement = {
+  type: "list-item";
+  children: CustomText[];
+};
+
+export type CustomElement = ParagraphElement | BulletListElement | ListItemElement;
 
 export type CustomText = {
   text: string;

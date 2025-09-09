@@ -5,9 +5,12 @@ type Props = {
   toggleBold: () => void;
   isItalicActive: boolean;
   toggleItalic: () => void;
+  isBulletListActive: boolean;
+  toggleBulletList: () => void;
   enabledFormats: {
     bold?: boolean;
     italic?: boolean;
+    bulletList?: boolean;
   };
 };
 
@@ -16,6 +19,8 @@ export const Toolbar: React.FC<Props> = ({
   toggleBold,
   isItalicActive,
   toggleItalic,
+  isBulletListActive,
+  toggleBulletList,
   enabledFormats,
 }) => {
   const onBoldMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,6 +31,11 @@ export const Toolbar: React.FC<Props> = ({
   const onItalicMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     toggleItalic();
+  };
+
+  const onBulletListMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    toggleBulletList();
   };
 
   return (
@@ -48,6 +58,16 @@ export const Toolbar: React.FC<Props> = ({
           aria-label="Italic"
         >
           <em>I</em>
+        </button>
+      )}
+      {enabledFormats.bulletList && (
+        <button
+          type="button"
+          className={`${styles.toolbarButton} ${isBulletListActive ? styles.active : ""}`}
+          onMouseDown={onBulletListMouseDown}
+          aria-label="Bullet List"
+        >
+          •
         </button>
       )}
     </div>

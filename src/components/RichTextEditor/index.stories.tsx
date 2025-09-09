@@ -27,7 +27,7 @@ const meta = {
       console.log("送信されたコンテンツ:", value);
       alert("送信されました！コンソールを確認してください。");
     },
-    enabledFormats: { bold: true, italic: true },
+    enabledFormats: { bold: true, italic: true, bulletList: true },
   },
 } satisfies Meta<typeof RichTextEditor>;
 
@@ -150,7 +150,7 @@ export const NoFormats: Story = {
 
 export const NoFormatsWithExistingFormats: Story = {
   args: {
-    enabledFormats: { bold: false, italic: false },
+    enabledFormats: { bold: false, italic: false, bulletList: false },
     initialValue: [
       {
         type: "paragraph",
@@ -169,5 +169,56 @@ export const NoFormatsWithExistingFormats: Story = {
         ],
       },
     ],
+  },
+};
+
+export const WithBulletList: Story = {
+  args: {
+    initialValue: [
+      {
+        type: "paragraph",
+        children: [{ text: "箇条書きのテスト:" }],
+      },
+      {
+        type: "bullet-list",
+        children: [
+          {
+            type: "list-item",
+            children: [{ text: "最初のアイテム" }],
+          },
+          {
+            type: "list-item",
+            children: [{ text: "2番目のアイテム" }],
+          },
+          {
+            type: "list-item",
+            children: [
+              { text: "太字", bold: true },
+              { text: "と" },
+              { text: "イタリック", italic: true },
+              { text: "を含むアイテム" },
+            ],
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [{ text: "箇条書きの後の通常テキスト" }],
+      },
+    ],
+  },
+};
+
+export const BulletListOnly: Story = {
+  args: {
+    enabledFormats: { bold: false, italic: false, bulletList: true },
+    initialValue: "箇条書きのみが有効です。•ボタンをクリックして箇条書きを作成できます。",
+  },
+};
+
+export const AllFormatsEnabled: Story = {
+  args: {
+    enabledFormats: { bold: true, italic: true, bulletList: true },
+    initialValue: "すべての書式が有効です。太字、イタリック、箇条書きが使用できます。",
   },
 };
