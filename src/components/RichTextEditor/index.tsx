@@ -35,21 +35,12 @@ export const RichTextEditor: React.FC<Props> = ({
     getInitialValue(initialValue),
   );
 
-  // ボタンの状態を管理するstate
-  const [isBoldActive, setIsBoldActive] = useState(false);
-  const [isItalicActive, setIsItalicActive] = useState(false);
-  const [isBulletListActive, setIsBulletListActive] = useState(false);
-
   const handleChange = useCallback(
     (newValue: Descendant[]) => {
       setValue(newValue);
       onChange?.(newValue);
-      // エディタの状態が変わったときにボタンの状態を更新
-      setIsBoldActive(CustomEditorUtils.isBoldMarkActive(editor));
-      setIsItalicActive(CustomEditorUtils.isItalicMarkActive(editor));
-      setIsBulletListActive(CustomEditorUtils.isBulletListActive(editor));
     },
-    [onChange, editor],
+    [onChange],
   );
 
   const handleKeyDown = useCallback(
@@ -78,24 +69,6 @@ export const RichTextEditor: React.FC<Props> = ({
     [editor, enabledFormats],
   );
 
-  const toggleBold = useCallback(() => {
-    CustomEditorUtils.toggleBoldMark(editor);
-    // ボタンクリック後に状態を即座に更新
-    setIsBoldActive(CustomEditorUtils.isBoldMarkActive(editor));
-  }, [editor]);
-
-  const toggleItalic = useCallback(() => {
-    CustomEditorUtils.toggleItalicMark(editor);
-    // ボタンクリック後に状態を即座に更新
-    setIsItalicActive(CustomEditorUtils.isItalicMarkActive(editor));
-  }, [editor]);
-
-  const toggleBulletList = useCallback(() => {
-    CustomEditorUtils.toggleBulletList(editor);
-    // ボタンクリック後に状態を即座に更新
-    setIsBulletListActive(CustomEditorUtils.isBulletListActive(editor));
-  }, [editor]);
-
   const renderElement = useCallback((props: RenderElementProps) => {
     switch (props.element.type) {
       case "bullet-list":
@@ -109,16 +82,8 @@ export const RichTextEditor: React.FC<Props> = ({
 
   return (
     <div className={styles.richTextEditor}>
-      <Toolbar
-        isBoldActive={isBoldActive}
-        toggleBold={toggleBold}
-        isItalicActive={isItalicActive}
-        toggleItalic={toggleItalic}
-        isBulletListActive={isBulletListActive}
-        toggleBulletList={toggleBulletList}
-        enabledFormats={enabledFormats}
-      />
       <Slate editor={editor} initialValue={value} onChange={handleChange}>
+        <Toolbar enabledFormats={enabledFormats} />
         <Editable
           className={styles.editable}
           renderLeaf={Leaf}
