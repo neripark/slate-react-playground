@@ -1,12 +1,8 @@
+import { useSlate } from "slate-react";
+import { CustomEditorUtils } from "../CustomEditorUtils";
 import styles from "./index.module.css";
 
 type Props = {
-  isBoldActive: boolean;
-  toggleBold: () => void;
-  isItalicActive: boolean;
-  toggleItalic: () => void;
-  isBulletListActive: boolean;
-  toggleBulletList: () => void;
   enabledFormats: {
     bold?: boolean;
     italic?: boolean;
@@ -15,27 +11,27 @@ type Props = {
 };
 
 export const Toolbar: React.FC<Props> = ({
-  isBoldActive,
-  toggleBold,
-  isItalicActive,
-  toggleItalic,
-  isBulletListActive,
-  toggleBulletList,
   enabledFormats,
 }) => {
+  const editor = useSlate();
+
+  const isBoldActive = CustomEditorUtils.isBoldMarkActive(editor);
+  const isItalicActive = CustomEditorUtils.isItalicMarkActive(editor);
+  const isBulletListActive = CustomEditorUtils.isBulletListActive(editor);
+
   const onBoldMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggleBold();
+    CustomEditorUtils.toggleBoldMark(editor);
   };
 
   const onItalicMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggleItalic();
+    CustomEditorUtils.toggleItalicMark(editor);
   };
 
   const onBulletListMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggleBulletList();
+    CustomEditorUtils.toggleBulletList(editor);
   };
 
   return (
