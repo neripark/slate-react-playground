@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, screen } from '@storybook/test';
 import { RichTextEditor } from "./index";
 
 const meta = {
@@ -220,5 +221,14 @@ export const AllFormatsEnabled: Story = {
   args: {
     enabledFormats: { bold: true, italic: true, bulletList: true },
     initialValue: "すべての書式が有効です。太字、イタリック、箇条書きが使用できます。",
+  },
+};
+
+export const PlaygroundOfInteractionTest: Story = {
+  args: {
+    initialValue: "ここに初期テキストが表示されます",
+  },
+  play: async () => {
+    expect(await screen.findByText('ここに初期テキストが表示されます' )).toBeInTheDocument();
   },
 };
